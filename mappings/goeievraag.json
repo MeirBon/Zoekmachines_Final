@@ -1,0 +1,83 @@
+{
+  "template": "goeievraag",
+  "version": 1,
+  "mappings": {
+    "questions": {
+      "properties": {
+        "questionId": {
+          "type": "double"
+        },
+        "date": {
+          "type": "date"
+        },
+        "userId": {
+          "type": "double"
+        },
+        "category": {
+          "type": "keyword"
+        },
+        "question": {
+          "type": "text"
+        },
+        "description": {
+          "type": "text"
+        },
+      }
+    },
+    "answers": {
+      "properties": {
+        "answerId": {
+          "type": "double"
+        },
+        "date": {
+          "type": "date"
+        },
+        "userId": {
+          "type": "double"
+        },
+        "questionId": {
+          "type": "double"
+        },
+        "answer": {
+          "type": "text"
+        },
+        "thumbsDown": {
+          "type": "double"
+        },
+        "thumbsUp": {
+          "type": "double"
+        },
+        "isBestAnswer": "boolean"
+      }
+    },
+    "categories": {
+      "properties": {
+        "categoryId": {
+          "type": "double"
+        },
+        "parentId": {
+          "type": "double"
+        },
+        "category": {
+          "type": "keyword"
+        }
+      }
+    },
+    "users": {
+      "properties": {
+        "userId": {
+          "type": "double"
+        },
+        "registrationDate": {
+          "type": "date"
+        },
+        "expertise": {
+          "type": "text"
+        },
+        "bestAnswers": {
+          "type": "double"
+        }
+      }
+    }
+  }
+}

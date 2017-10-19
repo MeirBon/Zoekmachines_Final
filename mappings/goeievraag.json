@@ -21,7 +21,7 @@
         },
         "description": {
           "type": "text"
-        },
+        }
       }
     },
     "answers": {
@@ -47,7 +47,9 @@
         "thumbsUp": {
           "type": "double"
         },
-        "isBestAnswer": "boolean"
+        "isBestAnswer": {
+          "type": "boolean"
+        }
       }
     },
     "categories": {

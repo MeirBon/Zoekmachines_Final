@@ -13,8 +13,8 @@
         "userId": {
           "type": "double"
         },
-        "category": {
-          "type": "keyword"
+        "categoryId": {
+          "type": "double"
         },
         "question": {
           "type": "text"

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Goeievraag</title>
+    <link href="/static/styles.css" rel="stylesheet">
+</head>
+<body>
+<div id="main-content">
+    <img src="/static/logo.png" width="64" height="64">
+    <p>Welkom bij de Goeievraag zoekmachine</p>
+
+    <br/>
+    <br/>
+    <form action="/search" method="post">
+        <input class="input" type="text"
+               name="query" id="query"
+               placeholder="Zoekopdracht" required/>
+        <br/>
+
+        <input type="submit" class="btn default"
+               id="submit_q" name="submit"
+               value="Zoeken"/>
+    </form>
+</div>
+
+</body>
+</html>

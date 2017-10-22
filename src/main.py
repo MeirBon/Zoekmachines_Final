@@ -3,8 +3,9 @@ from flask import Flask, request, render_template, redirect, url_for
 
 
 app = Flask('goeievraag')
-load_data()
 es = get_connection()
+load_data()
+
 
 
 @app.route('/')

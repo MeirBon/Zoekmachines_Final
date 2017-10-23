@@ -15,7 +15,7 @@ def get_mappings():
 
 def get_connection(host='127.0.0.1', port=9200,
                    username='elastic', password='changeme') -> Elasticsearch:
-    # format url
+    # format url for elasticsearch connection
     if exists(join('config.json')):
         with open(join('config.json')) as config_f:
             config = json.loads(config_f.read())
@@ -47,16 +47,16 @@ def to_boolean(value):
 
 
 def load_answers(es: Elasticsearch, data_f):
-    with open(data_f, 'r') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-        for row in reader:
-            if len(row) is not 8:
+    with open(data_f, 'r') as csvfile:  # open data file
+        reader = csv.reader(csvfile, delimiter=',', quotechar='"')  # setup reader with delimiter
+        for row in reader:  # loop over rows in csv
+            if len(row) is not 8:  # check if row is valid
                 continue
-            try:
+            try:  # try to setup the data for Elasticsearch, if it fails just continue with the next row
                 index = int(row[0])
-                if es.exists('goeievraag', 'answers', index):
+                if es.exists('goeievraag', 'answers', index):  # if data already loaded into elasticsearch -> continue
                     continue
-                data = {
+                data = {  # create json payload
                     "answerId": index,
                     "date": datetime.datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S'),
                     "userId": int(row[2]),
@@ -67,9 +67,9 @@ def load_answers(es: Elasticsearch, data_f):
                     "isBestAnswer": to_boolean(row[7])
                 }
             except ValueError:
-                print('Invalid answer', row[0])
+                print('Invalid answer', row[0])  # log to command line which answers are invalid
                 continue
-            es.create('goeievraag', 'answers', index, data)
+            es.create('goeievraag', 'answers', index, data)  # send data to elasticsearch
 
 
 def load_questions(es: Elasticsearch, data_f):
@@ -139,6 +139,9 @@ def load_users(es: Elasticsearch, data_f):
             es.create('goeievraag', 'users', index, data)
 
 
+#
+#   Function to load goeievraag data
+#
 def load_data(es: Elasticsearch):
     print("Loading answers")
     load_answers(es, join('data', 'answers.csv'))

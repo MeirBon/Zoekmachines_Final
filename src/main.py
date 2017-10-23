@@ -4,8 +4,7 @@ from flask import Flask, request, render_template, redirect, url_for
 
 app = Flask('goeievraag')
 es = get_connection()
-load_data()
-
+load_data(es)
 
 
 @app.route('/')

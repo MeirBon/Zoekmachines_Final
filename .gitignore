@@ -110,4 +110,5 @@ db.sqlite3
 
 # ide
 .vs/
+.vscode/
 .idea/

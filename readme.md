@@ -19,3 +19,6 @@ Press `ctl+c` to exit, or run `docker-compose down`.
 	"password": "changeme"
 }
 ```
+
+#### Setup data
+Make sure goeievraag .csv files are in `<root>/data`

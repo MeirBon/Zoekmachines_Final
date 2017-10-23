@@ -54,6 +54,8 @@ def load_answers(es: Elasticsearch, data_f):
                 continue
             try:
                 index = int(row[0])
+                if es.exists('goeievraag', 'answers', index):
+                    continue
                 data = {
                     "answerId": index,
                     "date": datetime.datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S'),
@@ -67,8 +69,6 @@ def load_answers(es: Elasticsearch, data_f):
             except ValueError:
                 print('Invalid answer', row[0])
                 continue
-            if es.exists('goeievraag', 'answers', index):
-                continue
             es.create('goeievraag', 'answers', index, data)
 
 
@@ -80,6 +80,8 @@ def load_questions(es: Elasticsearch, data_f):
                 continue
             try:
                 index = int(row[0])
+                if es.exists('goeievraag', 'questions', index):
+                    continue
                 data = {
                     "questionId": index,
                     "date": datetime.datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S'),
@@ -90,8 +92,6 @@ def load_questions(es: Elasticsearch, data_f):
                 }
             except ValueError:
                 print('Invalid question', row[0])
-                continue
-            if es.exists('goeievraag', 'questions', index):
                 continue
             es.create('goeievraag', 'questions', index, data)
 
@@ -104,6 +104,8 @@ def load_categories(es: Elasticsearch, data_f):
                 continue
             try:
                 index = int(row[0])
+                if es.exists('goeievraag', 'categories', index):
+                    continue
                 data = {
                     "categoryId": index,
                     "parentId": int(row[1]),
@@ -111,8 +113,6 @@ def load_categories(es: Elasticsearch, data_f):
                 }
             except ValueError:
                 print('Invalid categorie', row[0])
-                continue
-            if es.exists('goeievraag', 'categories', index):
                 continue
             es.create('goeievraag', 'categories', index, data)
 
@@ -125,6 +125,8 @@ def load_users(es: Elasticsearch, data_f):
                 continue
             try:
                 index = int(row[0])
+                if es.exists('goeievraag', 'users', index):
+                    continue
                 data = {
                     "userId": index,
                     "registrationDate": datetime.datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S'),
@@ -134,15 +136,12 @@ def load_users(es: Elasticsearch, data_f):
             except ValueError:
                 print('Invalid user', row[0])
                 continue
-            if es.exists('goeievraag', 'users', index):
-                continue
             es.create('goeievraag', 'users', index, data)
 
 
-def load_data():
-    es = get_connection()
+def load_data(es: Elasticsearch):
     print("Loading answers")
-    load_answers(es, join('data', 'answers_bak.csv'))
+    load_answers(es, join('data', 'answers.csv'))
     print("Loading questions")
     load_questions(es, join('data', 'questions.csv'))
     print("Loading categories")

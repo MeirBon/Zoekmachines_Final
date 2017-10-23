@@ -22,3 +22,6 @@ Press `ctl+c` to exit, or run `docker-compose down`.
 
 #### Setup data
 Make sure goeievraag .csv files are in `<root>/data`
+
+#### Start webserver
+To star the webserver run either `run.bat` on Windows, or `run.sh` on Linux

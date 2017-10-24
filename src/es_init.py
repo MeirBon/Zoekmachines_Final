@@ -14,12 +14,15 @@ def get_mappings():
 
 
 def get_connection(host='127.0.0.1', port=9200,
-                   username='elastic', password='changeme') -> Elasticsearch:
+                   username=None, password=None) -> Elasticsearch:
     # format url for elasticsearch connection
     if exists(join('config.json')):
         with open(join('config.json')) as config_f:
             config = json.loads(config_f.read())
-        url = config['username'] + ':' + config['password'] + '@' + config['host'] + ':' + config['port']
+        if config['username'] is None or config['password'] is None:
+            url = config['host'] + ':' + config['port']
+        else:
+            url = config['username'] + ':' + config['password'] + '@' + config['host'] + ':' + config['port']
     elif username is None and password is None:
         url = host + ':' + str(port)
     else:

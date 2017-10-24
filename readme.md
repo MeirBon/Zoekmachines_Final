@@ -21,7 +21,8 @@ Press `ctl+c` to exit, or run `docker-compose down`.
 ```
 
 #### Setup data
-Make sure goeievraag .csv files are in `<root>/data`
+- Make sure goeievraag .csv files are in `<root>/data`
+- Run `load_data.py` to start loading data to elasticsearch
 
 #### Start webserver
 To start the webserver run either `run.bat` on Windows, or `run.sh` on Linux

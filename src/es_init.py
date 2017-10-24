@@ -47,7 +47,7 @@ def to_boolean(value):
 
 
 def load_answers(es: Elasticsearch, data_f):
-    with open(data_f, 'r') as csvfile:  # open data file
+    with open(data_f, 'r', encoding="utf8") as csvfile:  # open data file
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')  # setup reader with delimiter
         for row in reader:  # loop over rows in csv
             if len(row) is not 8:  # check if row is valid
@@ -73,7 +73,7 @@ def load_answers(es: Elasticsearch, data_f):
 
 
 def load_questions(es: Elasticsearch, data_f):
-    with open(data_f, 'r') as csvfile:
+    with open(data_f, 'r', encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in reader:
             if len(row) is not 6:
@@ -97,7 +97,7 @@ def load_questions(es: Elasticsearch, data_f):
 
 
 def load_categories(es: Elasticsearch, data_f):
-    with open(data_f, 'r') as csvfile:
+    with open(data_f, 'r', encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in reader:
             if len(row) is not 3:
@@ -118,7 +118,7 @@ def load_categories(es: Elasticsearch, data_f):
 
 
 def load_users(es: Elasticsearch, data_f):
-    with open(data_f, 'r') as csvfile:
+    with open(data_f, 'r', encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in reader:
             if len(row) is not 4:

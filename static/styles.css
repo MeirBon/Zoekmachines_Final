@@ -12,7 +12,8 @@ html {
     max-width: 50em;
     min-width: 20em;
     padding: 2em;
-    background-color: #fafafa;
+    background-color: rgba(255, 104, 255, 0);
+    border: 1px solid #c552c5;
 }
 
 .btn {
@@ -49,20 +50,66 @@ input:focus{
     border-color:#4d90fe;
 }
 
-input[type="submit"] {
+.submit {
     background: #f2f2f2;
     border: 1px solid #f2f2f2;
     color: #757575;
     cursor: default;
     font-size: 14px;
     font-weight: bold;
-    width: 100px;
+    width: 45%;
     padding: 0 16px;
     height:36px;
 }
 
-input[type="submit"]:hover {
+.submit:hover {
     background: #f8f8f8;
     border: 1px solid #c6c6c6;
     color: #222;
+}
+
+table {
+    text-align: right;
+    border: 2px solid #f2f2f2;
+    border-collapse: separate;
+    border-spacing: 1em;
+    padding: 1em;
+    margin: auto;
+}
+
+table .id {
+    text-align: left;
+}
+
+table .date {
+    
+}
+
+table .question {
+    text-align: left;
+}
+
+.page {
+    text-decoration: none;
+    background: #f2f2f2;
+    border: 1px solid #f2f2f2;
+    margin: 1em;
+    color: #757575;
+    cursor: default;
+    font-size: 1em;
+    width: 45%;
+    padding: 0.4em 1em;
+    height:36px;
+}
+
+.page:hover {
+    background: #f8f8f8;
+    border: 1px solid #c6c6c6;
+    color: #222;
+    cursor: pointer;
+}
+
+#footer {
+    margin: auto;
+    padding: 1em;
 }

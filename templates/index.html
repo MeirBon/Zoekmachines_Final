@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Goeievraag</title>
     <link href="/static/styles.css" rel="stylesheet">
+    <script>
+        function toggleAdvanced() {
+
+        }
+    </script>
 </head>
 <body>
 <div id="main-content">
@@ -12,16 +17,20 @@
 
     <br/>
     <br/>
-    <form action="/search" method="post">
+    <form id="search-form" action="/search" method="post">
         <input class="input" type="text"
                name="query" id="query"
                placeholder="Zoekopdracht" required/>
         <br/>
-
-        <input type="submit" class="btn default"
-               id="submit_q" name="submit"
-               value="Zoeken"/>
     </form>
+
+    <button type="submit" class="submit" id="submit_q" form="search-form">
+            Zoeken
+    </button>
+
+    <button class="submit" onclick="toggleAdvanced()">
+            Geavanceerd
+    </button>
 </div>
 
 </body>

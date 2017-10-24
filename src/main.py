@@ -1,5 +1,7 @@
 from src.es_init import get_connection, load_data
 from flask import Flask, request, render_template, redirect, url_for
+from src.search import simple_search, advanced_search, get_question
+import time
 
 app = Flask('goeievraag')  # start Flask app
 es = get_connection()  # get elasticsearch connection
@@ -29,12 +31,32 @@ def search():
 #
 @app.route('/s/<string:query>')
 def s(query):
-    return render_template('search.html', query=query)
+    current_page = int(request.args.get('page', 1))
+    offset = current_page * 20 - 20
+
+    time1 = time.time()
+    results = simple_search(es, query, offset)
+    elapsed = round(time.time() - time1, 10)
+
+    pages = round(results['hits']['total'] / 20)
+
+    if results['hits']['total'] % 20 > 0:
+        pages += 1
+    return render_template('search.html', query=query,
+                           results=results, elapsed=elapsed,
+                           pages=pages, current_page=current_page)
+
+
+@app.route('/question/<int:question_id>')
+def question(question_id):
+    data = get_question(es, question_id)
+    print(data)
+    return render_template('question.html', data=data)
 
 
 #
 #   TODO: route for advanced queries
 #
 @app.route('/s_a')
-def s_a():
+def s_a(form):
     return str(request.form)

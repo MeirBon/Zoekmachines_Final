@@ -6,7 +6,47 @@
     <link href="/static/styles.css" rel="stylesheet">
 </head>
 <body>
+<div id="main-content">
 
-<p> Zoekopdracht is {{ query }}</p>
+    <p>
+        Zoekopdracht is <strong>{{ query }}</strong>
+    </p>
+    <p>
+        <strong>{{ results.hits.total }}</strong> resultaten in {{ elapsed }} seconden
+    </p>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Datum</th>
+            <th>Vraag</th>
+        </tr>
+
+        {% for item in results.hits.hits %}
+            <tr>
+                <td class="id">{{ item._source.questionId }}</td>
+                <td class="date">{{ item._source.date }}</td>
+                <td class="question">
+                    <a href="/question/{{ item._source.questionId }}">
+                        {{ item._source.question }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div id="footer">
+        {% if current_page - 1 > 0 %}
+            <a class="page" href="?page={{ current_page - 1 }}">
+                Vorige
+            </a>
+        {% endif %}
+        {% if current_page + 1 <= pages %}
+            <a class="page" href="?page={{ current_page + 1 }}">
+                Volgende
+            </a>
+        {% endif %}
+    </div>
+</div>
 </body>
 </html>

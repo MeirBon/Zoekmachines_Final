@@ -25,3 +25,18 @@ def advanced_search(es: Elasticsearch, offset=0, size=20):
 
 def get_question(es: Elasticsearch, question_id):
     return es.get(index='goeievraag', doc_type='questions', id=question_id)
+
+
+def get_answers(es: Elasticsearch, question_id):
+    return es.search(index='goeievraag', doc_type='answers', body={
+        "size": 1000,
+        "query": {
+            "bool": {
+                "must": {
+                    "match": {
+                        "questionId": question_id
+                    }
+                }
+            }
+        }
+    })

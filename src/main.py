@@ -1,6 +1,6 @@
 from src.es_init import get_connection, load_data
 from flask import Flask, request, render_template, redirect, url_for
-from src.search import simple_search, advanced_search, get_question
+from src.search import simple_search, advanced_search, get_question, get_answers
 import time
 
 app = Flask('goeievraag')  # start Flask app
@@ -47,11 +47,14 @@ def s(query):
                            pages=pages, current_page=current_page)
 
 
+#
+#   route for details of question
+#
 @app.route('/question/<int:question_id>')
 def question(question_id):
     data = get_question(es, question_id)
-    print(data)
-    return render_template('question.html', data=data)
+    answers = get_answers(es, question_id)
+    return render_template('question.html', data=data, answers=answers)
 
 
 #

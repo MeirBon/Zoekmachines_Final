@@ -9,7 +9,7 @@ html {
     text-align: center;
     margin: auto;
     display: inline-block;
-    max-width: 50em;
+    max-width: 80em;
     min-width: 20em;
     padding: 2em;
     background-color: rgba(255, 104, 255, 0);
@@ -75,6 +75,7 @@ table {
     border-spacing: 1em;
     padding: 1em;
     margin: auto;
+    width: 100%;
 }
 
 table .id {
@@ -112,4 +113,8 @@ table .question {
 #footer {
     margin: auto;
     padding: 1em;
+}
+
+.text-left {
+    text-align: left;
 }

@@ -2,9 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Goeievraag - {{ data._id }}</title>
+    <link href="/static/styles.css" rel="stylesheet">
 </head>
 <body>
+<div id="main-content">
+    <table>
+        <tr>
+            <th class="text-left">
+                Vraag
+            </th>
+            <th class="text-left">
+                Beschrijving
+            </th>
+        </tr>
+        <tr>
+            <td class="text-left">
+                {{ data._source.question }}
+            </td>
+            <td class="text-left">
+                {{ data._source.description }}
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th class="text-left">
+                UserID
+            </th>
+            <th class="text-left">
+                Datum
+            </th>
+            <th class="text-left">
+                Antwoord
+            </th>
+            <th class="text-left">
+                ThumbsDown
+            </th>
+            <th class="text-left">
+                ThumbsUp
+            </th>
+            <th class="text-left">
+                Beste Antwoord
+            </th>
+        </tr>
+        {% for item in answers.hits.hits %}
+        <tr>
+            <td class="text-left">
+                {{ item._source.userId }}
+            </td>
+            <td class="text-left">
+                {{ item._source.date }}
+            </td>
+            <td class="text-left">
+                {{ item._source.answer }}
+            </td>
+            <td class="text-left">
+                {{ item._source.thumbsDown }}
+            </td>
+            <td class="text-left">
+                {{ item._source.thumbsUp }}
+            </td>
+            <td class="text-left">
+                {{ item._source.isBestAnswer }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
 </body>
 </html>

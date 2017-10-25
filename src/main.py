@@ -12,7 +12,15 @@ es = get_connection()  # get elasticsearch connection
 #
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', advanced=False)
+
+
+#
+#   advanced search index
+#
+@app.route('/advanced')
+def advanced_index():
+    return render_template('index.html', advanced=True)
 
 
 #

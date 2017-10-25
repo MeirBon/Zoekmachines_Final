@@ -7,6 +7,14 @@
 </head>
 <body>
 <div id="main-content">
+    <a href="/">
+        <button class="submit">
+            Home
+        </button>
+    </a>
+    <p>
+        Vraag: <strong>{{ data._source.questionId }}</strong>
+    </p>
     <table>
         <tr>
             <th class="text-left">
@@ -31,7 +39,7 @@
             <th class="text-left">
                 UserID
             </th>
-            <th class="text-left">
+            <th class="text-left date">
                 Datum
             </th>
             <th class="text-left">
@@ -48,26 +56,26 @@
             </th>
         </tr>
         {% for item in answers.hits.hits %}
-        <tr>
-            <td class="text-left">
-                {{ item._source.userId }}
-            </td>
-            <td class="text-left">
-                {{ item._source.date }}
-            </td>
-            <td class="text-left">
-                {{ item._source.answer }}
-            </td>
-            <td class="text-left">
-                {{ item._source.thumbsDown }}
-            </td>
-            <td class="text-left">
-                {{ item._source.thumbsUp }}
-            </td>
-            <td class="text-left">
-                {{ item._source.isBestAnswer }}
-            </td>
-        </tr>
+            <tr>
+                <td class="text-left">
+                    {{ item._source.userId }}
+                </td>
+                <td class="text-left">
+                    {{ item._source.date.replace('T', ' ') }}
+                </td>
+                <td class="text-left">
+                    {{ item._source.answer }}
+                </td>
+                <td class="text-left">
+                    {{ item._source.thumbsDown }}
+                </td>
+                <td class="text-left">
+                    {{ item._source.thumbsUp }}
+                </td>
+                <td class="text-left">
+                    {{ item._source.isBestAnswer }}
+                </td>
+            </tr>
         {% endfor %}
     </table>
 </div>

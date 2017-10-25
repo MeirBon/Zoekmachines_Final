@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <title>Goeievraag</title>
     <link href="/static/styles.css" rel="stylesheet">
-    <script>
-        function toggleAdvanced() {
-
-        }
-    </script>
 </head>
 <body>
 <div id="main-content">
@@ -17,20 +12,34 @@
 
     <br/>
     <br/>
-    <form id="search-form" action="/search" method="post">
-        <input class="input" type="text"
-               name="query" id="query"
-               placeholder="Zoekopdracht" required/>
-        <br/>
-    </form>
+    {% if not advanced %}
+        <form id="search-form" action="/search" method="post">
+            <input class="input" type="text"
+                   name="query" id="query"
+                   placeholder="Zoekopdracht" required/>
+            <br/>
+        </form>
+    {% else %}
+
+    {% endif %}
 
     <button type="submit" class="submit" id="submit_q" form="search-form">
-            Zoeken
+        Zoeken
     </button>
 
-    <button class="submit" onclick="toggleAdvanced()">
-            Geavanceerd
-    </button>
+    {% if not advanced %}
+        <a href="/advanced">
+            <button class="submit">
+                Geavanceerd
+            </button>
+        </a>
+    {% else %}
+        <a href="/">
+            <button class="submit">
+                Normaal
+            </button>
+        </a>
+    {% endif %}
 </div>
 
 </body>

@@ -118,3 +118,7 @@ table .question {
 .text-left {
     text-align: left;
 }
+
+.date {
+    min-width: 10em;
+}

@@ -30,7 +30,6 @@ def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till
         till_date = False
 
     if query and category and user_id and from_date and till_date:
-        print('1')
         return es.search(index="goeievraag", doc_type="questions", body={
             "from": offset, "size": size,
             "query": {
@@ -51,7 +50,6 @@ def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till
             }
         })
     elif query and category and user_id and from_date:
-        print('2')
         return es.search(index="goeievraag", doc_type="questions", body={
             "from": offset, "size": size,
             "query": {
@@ -77,7 +75,6 @@ def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till
             }
         })
     elif query and from_date and till_date:
-        print('10')
         return es.search(index="goeievraag", doc_type="questions", body={
             "from": offset, "size": size,
             "query": {
@@ -102,7 +99,6 @@ def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till
             }
         })
     elif query and from_date:
-        print('3')
         return es.search(index="goeievraag", doc_type="questions", body={
             "from": offset, "size": size,
             "query": {
@@ -120,7 +116,6 @@ def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till
             }
         })
     elif query and till_date:
-        print('4')
         return es.search(index="goeievraag", doc_type="questions", body={
             "from": offset, "size": size,
             "query": {
@@ -138,7 +133,6 @@ def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till
             }
         })
     elif query and category and user_id and till_date:
-        print('5')
         return es.search(index="goeievraag", doc_type="questions", body={
             "from": offset, "size": size,
             "query": {
@@ -193,7 +187,6 @@ def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till
             }
         })
     elif query and category:
-        print('7')
         return es.search(index="goeievraag", doc_type="questions", body={
             "from": offset, "size": size,
             "query": {
@@ -208,7 +201,6 @@ def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till
                 }
             }
         })
-    print('8')
     return es.search(index="goeievraag", doc_type="questions", body={
         "from": offset, "size": size,
         "query": {

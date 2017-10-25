@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Goeievraag - Zoeken</title>
     <link href="/static/styles.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 </head>
@@ -75,15 +76,67 @@
             <nav>
                 <ul class="pagination">
                     {% if current_page - 1 > 0 %}
-                        <li class="page-item"><a class="page-link" href="?page={{ current_page - 1 }}">Vorige</a></li>
+                        {% if advanced %}
+                            <li class="page-item">
+                                <a id="previous" class="page-link" href="&page={{ current_page - 1 }}">Vorige</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ current_page - 1 }}">Vorige</a>
+                            </li>
+                        {% endif %}
                     {% endif %}
                     {% if current_page + 1 <= pages %}
-                        <li class="page-item"><a class="page-link" href="?page={{ current_page + 1 }}">Volgende</a></li>
+                        {% if advanced %}
+                            <li class="page-item">
+                                <a id="next" class="page-link" href="&page={{ current_page + 1 }}">Volgende</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ current_page + 1 }}">Volgende</a>
+                            </li>
+                        {% endif %}
                     {% endif %}
                 </ul>
             </nav>
         </div>
     </div>
 </div>
+<script>
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (decodeURIComponent(pair[0]) === variable) {
+                return decodeURIComponent(pair[1]);
+            }
+        }
+        return null;
+    }
+
+    var next = document.getElementById('next');
+    var previous = document.getElementById('previous');
+    var curPage = getQueryVariable('page');
+    var curLoc = (location.pathname + location.search);
+
+    if (next) {
+        var nextParam = next.getAttribute('href');
+        if (curPage !== null) {
+            next.setAttribute('href', curLoc.substr(0, curLoc.length - ("&page=" + curPage).length) + nextParam);
+        } else {
+            next.setAttribute('href', curLoc + nextParam)
+        }
+    }
+
+    if (previous) {
+        var previousParam = previous.getAttribute('href');
+        if (curPage !== null) {
+            previous.setAttribute('href', curLoc.substr(0, curLoc.length - ("&page=" + curPage).length) + previousParam);
+        } else {
+            previous.setAttribute('href', curLoc + previousParam)
+        }
+    }
+</script>
 </body>
 </html>

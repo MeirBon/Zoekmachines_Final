@@ -66,7 +66,7 @@ def question(question_id):
 
 
 #
-#   TODO: route for advanced queries
+#   route for advanced queries
 #
 @app.route('/s_a')
 def s_a():

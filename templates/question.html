@@ -4,81 +4,98 @@
     <meta charset="UTF-8">
     <title>Goeievraag - {{ data._id }}</title>
     <link href="/static/styles.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div id="main-content">
-    <a href="/">
-        <button class="submit">
-            Home
-        </button>
-    </a>
-    <p>
-        Vraag: <strong>{{ data._source.questionId }}</strong>
-    </p>
-    <table>
-        <tr>
-            <th class="text-left">
-                Vraag
-            </th>
-            <th class="text-left">
-                Beschrijving
-            </th>
-        </tr>
-        <tr>
-            <td class="text-left">
-                {{ data._source.question }}
-            </td>
-            <td class="text-left">
-                {{ data._source.description }}
-            </td>
-        </tr>
-    </table>
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">Goeievraag</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                </ul>
+                <form class="navbar-form navbar-left" action="/search" method="post">
+                    <div class="form-group">
+                        {% if query %}
+                            <input type="text" class="form-control" name="query" id="query" placeholder="Search"
+                                   value="{{ query }}">
+                        {% else %}
+                            <input type="text" class="form-control" name="query" id="query" placeholder="Search">
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-default">Zoeken</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
-    <table>
-        <tr>
-            <th class="text-left">
-                UserID
-            </th>
-            <th class="text-left date">
-                Datum
-            </th>
-            <th class="text-left">
-                Antwoord
-            </th>
-            <th class="text-left">
-                ThumbsDown
-            </th>
-            <th class="text-left">
-                ThumbsUp
-            </th>
-            <th class="text-left">
-                Beste Antwoord
-            </th>
-        </tr>
-        {% for item in answers.hits.hits %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <p>
+                Vraag: <strong>{{ data._source.questionId }}</strong>
+            </p>
+        </div>
+
+        <table class="table">
+            <thead>
             <tr>
-                <td class="text-left">
-                    {{ item._source.userId }}
-                </td>
-                <td class="text-left">
-                    {{ item._source.date.replace('T', ' ') }}
-                </td>
-                <td class="text-left">
-                    {{ item._source.answer }}
-                </td>
-                <td class="text-left">
-                    {{ item._source.thumbsDown }}
-                </td>
-                <td class="text-left">
-                    {{ item._source.thumbsUp }}
-                </td>
-                <td class="text-left">
-                    {{ item._source.isBestAnswer }}
-                </td>
+                <th>Vraag</th>
+                <th>Beschrijving</th>
             </tr>
-        {% endfor %}
-    </table>
-</div>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-left">{{ data._source.question }}</td>
+                <td class="text-left">{{ data._source.description }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <p>
+                Antwoorden
+            </p>
+        </div>
 
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>UserID</th>
+                <th>Datum</th>
+                <th>Antwoord</th>
+                <th>ThumbsDown</th>
+                <th>ThumbsUp</th>
+                <th>Beste Antwoord</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in answers.hits.hits %}
+                <tr>
+                    <td class="text-left">{{ item._source.userId }}</td>
+                    <td class="text-left text-nowrap">{{ item._source.date.replace('T', ' ') }}</td>
+                    <td class="text-left">{{ item._source.answer }}</td>
+                    <td class="text-left">{{ item._source.thumbsDown }}</td>
+                    <td class="text-left">{{ item._source.thumbsUp }}</td>
+                    <td class="text-left">{{ item._source.isBestAnswer }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
 </body>
 </html>

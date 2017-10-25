@@ -40,3 +40,12 @@ def get_answers(es: Elasticsearch, question_id):
             }
         }
     })
+
+
+def get_categories(es: Elasticsearch):
+    return es.search(index='goeievraag', doc_type='categories', body={
+        "size": 1000,
+        "query": {
+            "match_all": {}
+        }
+    })

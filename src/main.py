@@ -1,6 +1,6 @@
 from src.es_init import get_connection, load_data
 from flask import Flask, request, render_template, redirect, url_for
-from src.search import simple_search, advanced_search, get_question, get_answers
+from src.search import simple_search, advanced_search, get_question, get_answers, get_categories
 import time
 
 app = Flask('goeievraag')  # start Flask app
@@ -20,7 +20,7 @@ def index():
 #
 @app.route('/advanced')
 def advanced_index():
-    return render_template('index.html', advanced=True)
+    return render_template('index.html', advanced=True, categories=get_categories(es))
 
 
 #

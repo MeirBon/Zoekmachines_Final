@@ -88,7 +88,6 @@ def s_a():
     pages = round(results['hits']['total'] / 20)
     if results['hits']['total'] % 20 > 0:
         pages += 1
-    print(request.args)
 
     return render_template('search.html', query=query, advanced=True,
                            results=results, elapsed=elapsed,

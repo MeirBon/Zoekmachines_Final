@@ -74,6 +74,9 @@
         </table>
         <div class="panel-footer">
             <nav>
+                <div class="text-center">
+                    Huidige pagina: <strong>{{ current_page }}</strong> van <strong>{{ pages }}</strong>
+                </div>
                 <ul class="pagination">
                     {% if current_page - 1 > 0 %}
                         {% if advanced %}

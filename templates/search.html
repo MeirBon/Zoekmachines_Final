@@ -51,6 +51,7 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
+                <th scope="col">UserID</th>
                 <th scope="col">Datum</th>
                 <th scope="col">Vraag</th>
             </tr>
@@ -59,6 +60,7 @@
             {% for item in results.hits.hits %}
                 <tr>
                     <td class="text-left">{{ item._source.questionId }}</td>
+                    <td class="text-left">{{ item._source.userId }}</td>
                     <td class="text-left text-nowrap">{{ item._source.date.replace('T', ' ') }}</td>
                     <td class="text-left">
                         <a href="/question/{{ item._source.questionId }}">

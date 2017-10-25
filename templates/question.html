@@ -50,12 +50,16 @@
         <table class="table">
             <thead>
             <tr>
+                <th>UserID</th>
+                <th>Datum</th>
                 <th>Vraag</th>
                 <th>Beschrijving</th>
             </tr>
             </thead>
             <tbody>
             <tr>
+                <td class="text-left">{{ data._source.userId }}</td>
+                <td class="text-left">{{ data._source.date.replace('T', ' ') }}</td>
                 <td class="text-left">{{ data._source.question }}</td>
                 <td class="text-left">{{ data._source.description }}</td>
             </tr>

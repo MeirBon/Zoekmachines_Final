@@ -18,8 +18,15 @@ def index():
 #
 #   advanced search index
 #
-@app.route('/advanced')
+@app.route('/advanced', methods=['GET', 'POST'])
 def advanced_index():
+    if request.method == 'POST':
+        query = request.form['query']
+        category = request.form['category']
+        fromData = request.form['from']
+        tillData = request.form['till']
+        userId = request.form['userId']
+
     return render_template('index.html', advanced=True, categories=get_categories(es))
 
 
@@ -69,5 +76,25 @@ def question(question_id):
 #   TODO: route for advanced queries
 #
 @app.route('/s_a')
-def s_a(form):
-    return str(request.form)
+def s_a():
+    current_page = int(request.args.get('page', 1))
+    offset = current_page * 20 - 20
+
+    query = request.args.get('query', '')
+    user_id = request.args.get('userId', '')
+    from_date = request.args.get('from', '')
+    till_date = request.args.get('till', '')
+    category = request.args.get('category', '')
+
+    time1 = time.time()
+    results = advanced_search(es, offset=offset, query=query, category=category, user_id=user_id, from_date=from_date, till_date=till_date)
+    elapsed = round(time.time() - time1, 10)
+
+    pages = round(results['hits']['total'] / 20)
+    if results['hits']['total'] % 20 > 0:
+        pages += 1
+    print(request.args)
+
+    return render_template('search.html', query=query,
+                           results=results, elapsed=elapsed,
+                           pages=pages, current_page=current_page)

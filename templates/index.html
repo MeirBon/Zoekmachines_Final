@@ -33,8 +33,12 @@
                 <label for="category">Categorie</label>
                 <select id="category" name="category" class="form-control">
                     <option value=""></option>
-                    {% for category in categories.hits.hits|sort(attribute='_source.category') %}
-                        <option value="{{ category._source.categoryId }}">{{ category._source.category }}</option>
+                    {% for parent, category in parents.items() %}
+                        <optgroup label="{{ categories[parent] }}">
+                            {% for cg in category %}
+                                <option value="{{ cg[1] }}">{{ cg[0] }}</option>
+                            {% endfor %}
+                        </optgroup>
                     {% endfor %}
                 </select>
             </div>

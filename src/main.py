@@ -20,7 +20,18 @@ def index():
 #
 @app.route('/advanced', methods=['GET', 'POST'])
 def advanced_index():
-    return render_template('index.html', advanced=True, categories=get_categories(es))
+    categories = get_categories(es)
+    cgs = dict()
+    parents = dict()
+    for category in categories['hits']['hits']:
+        cgs[category['_source']['categoryId']] = category['_source']['category']
+        if category['_source']['parentId'] not in parents:
+            parents[category['_source']['parentId']] = []
+        else:
+            parents[category['_source']['parentId']].append([
+                category['_source']['category'], category['_source']['categoryId']
+            ])
+    return render_template('index.html', advanced=True, parents=parents, categories=cgs)
 
 
 #

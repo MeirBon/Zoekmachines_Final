@@ -57,9 +57,9 @@
                 <th scope="col">Vraag</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="table-content">
             {% for item in results.hits.hits %}
-                <tr>
+                <tr id="{{ item._id }}">
                     <td class="text-left">{{ item._source.questionId }}</td>
                     <td class="text-left">{{ item._source.userId }}</td>
                     <td class="text-left text-nowrap">{{ item._source.date.replace('T', ' ') }}</td>
@@ -139,6 +139,12 @@
         } else {
             previous.setAttribute('href', curLoc + previousParam)
         }
+    }
+</script>
+<script>
+    var rows = document.getElementById('table-content').getElementsByTagName('tr');
+    for (row in rows) {
+        console.log(row.id)
     }
 </script>
 </body>

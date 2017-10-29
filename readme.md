@@ -26,3 +26,6 @@ Press `ctl+c` to exit, or run `docker-compose down`.
 
 #### Start webserver
 To start the webserver run either `run.bat` on Windows, or `run.sh` on Linux
+
+#### Github Page
+Please read our github page at https://github.com/MeirBon/Zoekmachines_Final and our github wiki at https://github.com/MeirBon/Zoekmachines_Final/wiki

@@ -18,17 +18,6 @@ def simple_search(es: Elasticsearch, query: str, offset=0, size=20):
 
 
 def advanced_search(es: Elasticsearch, query, category, user_id, from_date, till_date, offset=0, size=20):
-    if query == '':
-        query = False
-    if category == '':
-        category = False
-    if user_id == '':
-        user_id = False
-    if from_date == '':
-        from_date = False
-    if till_date == '':
-        till_date = False
-
     if query and category and user_id and from_date and till_date:
         return es.search(index="goeievraag", doc_type="questions", body={
             "from": offset, "size": size,

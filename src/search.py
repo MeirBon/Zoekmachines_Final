@@ -1,4 +1,5 @@
 from elasticsearch import Elasticsearch
+from nltk.corpus import stopwords
 
 
 def simple_search(es: Elasticsearch, query: str, offset=0, size=20):
@@ -231,3 +232,30 @@ def get_categories(es: Elasticsearch):
             "match_all": {}
         }
     })
+
+
+def get_termvectors(es: Elasticsearch, id):
+    result = es.termvectors(index="goeievraag", doc_type="questions", id=id, body={
+        "fields": ["question", "description"],
+    })
+
+    stop = set(stopwords.words('dutch'))
+    vectors = dict()
+
+    for term, data in result['term_vectors']['question']['terms'].items():
+        if term in stop:
+            continue
+        if term not in vectors:
+            vectors[term] = data['term_freq']
+        else:
+            vectors[term] += data['term_freq']
+
+    for term, data in result['term_vectors']['description']['terms'].items():
+        if term in stop:
+            continue
+        if term not in vectors:
+            vectors[term] = data['term_freq']
+        else:
+            vectors[term] += data['term_freq']
+
+    return vectors

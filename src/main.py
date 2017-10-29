@@ -1,7 +1,7 @@
-from src.es_init import get_connection, load_data
+from src.es_init import get_connection
 from flask import Flask, request, render_template, redirect, url_for
-from src.search import simple_search, advanced_search, get_question, get_answers, get_categories
-import time
+from src.search import simple_search, advanced_search, get_question, get_answers, get_categories, get_termvectors
+import time, json
 
 app = Flask('goeievraag')  # start Flask app
 es = get_connection()  # get elasticsearch connection
@@ -103,3 +103,17 @@ def s_a():
     return render_template('search.html', query=query, advanced=True,
                            results=results, elapsed=elapsed,
                            pages=pages, current_page=current_page)
+
+
+@app.route('/termvectors/<id>')
+def termvectors(id):
+    # vectors = {
+    #     "test": 5,
+    #     "test2": 3,
+    #     "dit": 6,
+    #     "dat": 8,
+    #     "honden": 3,
+    #     "katten": 5
+    # }
+    vectors = get_termvectors(es, id)
+    return json.dumps(vectors)

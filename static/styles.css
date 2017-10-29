@@ -25,3 +25,7 @@ html {
 form {
     text-align: left;
 }
+
+#surrounding_div {
+    width: 100%;
+}

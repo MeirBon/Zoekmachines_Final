@@ -1,8 +1,6 @@
 from os import listdir
 from os.path import isfile, join, exists
-import json
-import datetime
-import csv
+import json, nltk, datetime, csv
 from elasticsearch import Elasticsearch
 
 
@@ -15,6 +13,8 @@ def get_mappings():
 
 def get_connection(host='127.0.0.1', port=9200,
                    username=None, password=None) -> Elasticsearch:
+    nltk.download('stopwords')
+
     # format url for elasticsearch connection
     if exists(join('config.json')):
         with open(join('config.json')) as config_f:

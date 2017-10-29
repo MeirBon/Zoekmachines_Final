@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/wordcloud2.js"></script>
 </head>
 <body>
 <div class="container">
@@ -47,6 +48,9 @@
             <p>
                 <strong>{{ results.hits.total }}</strong> resultaten in {{ elapsed }} seconden
             </p>
+        </div>
+        <div id="surrounding_div">
+            <canvas id="wordcloud"></canvas>
         </div>
         <table class="table">
             <thead>
@@ -142,10 +146,68 @@
     }
 </script>
 <script>
+    var getUrl = window.location;
+    var baseUrl = getUrl.protocol + "//" + getUrl.host + "/termvectors/";
     var rows = document.getElementById('table-content').getElementsByTagName('tr');
-    for (row in rows) {
-        console.log(row.id)
+    var div = document.getElementById('surrounding_div');
+    var wordcloud = document.getElementById('wordcloud');
+    var terms = {};
+
+    wordcloud.height = div.offsetHeight;
+    wordcloud.width = div.offsetWidth;
+
+    function addUp(oldObj, newObj) {
+        for (var term in newObj) {
+            if (!newObj.hasOwnProperty(term)) {
+                continue;
+            }
+            if (oldObj.hasOwnProperty(term)) {
+                oldObj[term] += newObj[term];
+            } else {
+                oldObj[term] = newObj[term];
+            }
+        }
+        return oldObj;
     }
+
+    function updateWordcloud(terms) {
+        var words = [];
+        for (var word in terms) {
+            if (terms.hasOwnProperty(word) && terms[word] > 1) {
+                words.push([word, terms[word]]);
+            }
+        }
+
+        WordCloud(wordcloud, {
+            list: words,
+            gridSize: Math.round(16 * wordcloud.width / 1024)
+        });
+    }
+
+    var ajaxQueue = $({});
+    $.ajaxQueue = function (ajaxOpts) {
+        var oldComplete = ajaxOpts.complete;
+        ajaxQueue.queue(function (next) {
+            ajaxOpts.complete = function () {
+                if (oldComplete) oldComplete.apply(this, arguments);
+                next();
+            };
+            if (typeof ajaxOpts === 'object') {
+                $.ajax(ajaxOpts);
+            }
+        });
+    };
+
+    for (i = 0; i < rows.length; i++) {
+        $.ajaxQueue({
+            url: baseUrl + rows[i].id,
+            success: function (result) {
+                terms = addUp(terms, JSON.parse(result));
+                updateWordcloud(terms);
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
